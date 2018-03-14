@@ -10,6 +10,8 @@
     <AssemblyName>WebTester</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,6 +33,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Costura, Version=1.6.2.0, Culture=neutral, PublicKeyToken=9919ef960d84173d, processorArchitecture=MSIL">
+      <HintPath>..\packages\Costura.Fody.1.6.2\lib\portable-net+sl+win+wpa+wp\Costura.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.7.1.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.7.1\lib\Net40\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,14 +55,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddHeader.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddHeader.Designer.cs">
+      <DependentUpon>AddHeader.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\HeaderEntity.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="HttpHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AddHeader.resx">
+      <DependentUpon>AddHeader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -60,6 +87,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -70,5 +98,17 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="FodyWeavers.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Costura.Fody.1.6.2\build\portable-net+sl+win+wpa+wp\Costura.Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Costura.Fody.1.6.2\build\portable-net+sl+win+wpa+wp\Costura.Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\Fody.2.4.6\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.2.4.6\build\Fody.targets'))" />
+  </Target>
+  <Import Project="..\packages\Costura.Fody.1.6.2\build\portable-net+sl+win+wpa+wp\Costura.Fody.targets" Condition="Exists('..\packages\Costura.Fody.1.6.2\build\portable-net+sl+win+wpa+wp\Costura.Fody.targets')" />
+  <Import Project="..\packages\Fody.2.4.6\build\Fody.targets" Condition="Exists('..\packages\Fody.2.4.6\build\Fody.targets')" />
 </Project>
