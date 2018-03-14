@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.gvHeaders = new System.Windows.Forms.DataGridView();
+            this.clKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label1 = new System.Windows.Forms.Label();
             this.cbKey = new System.Windows.Forms.ComboBox();
             this.txtValue = new System.Windows.Forms.TextBox();
@@ -36,8 +38,6 @@
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnDel = new System.Windows.Forms.Button();
             this.btnFinish = new System.Windows.Forms.Button();
-            this.clKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.gvHeaders)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,8 +50,23 @@
             this.gvHeaders.Location = new System.Drawing.Point(12, 12);
             this.gvHeaders.Name = "gvHeaders";
             this.gvHeaders.RowTemplate.Height = 27;
+            this.gvHeaders.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gvHeaders.Size = new System.Drawing.Size(443, 150);
             this.gvHeaders.TabIndex = 0;
+            // 
+            // clKey
+            // 
+            this.clKey.DataPropertyName = "Key";
+            this.clKey.HeaderText = "键";
+            this.clKey.Name = "clKey";
+            this.clKey.Width = 200;
+            // 
+            // clValue
+            // 
+            this.clValue.DataPropertyName = "Value";
+            this.clValue.HeaderText = "值";
+            this.clValue.Name = "clValue";
+            this.clValue.Width = 200;
             // 
             // label1
             // 
@@ -112,6 +127,7 @@
             this.btnDel.TabIndex = 6;
             this.btnDel.Text = "删除选中";
             this.btnDel.UseVisualStyleBackColor = true;
+            this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
             // 
             // btnFinish
             // 
@@ -121,20 +137,7 @@
             this.btnFinish.TabIndex = 7;
             this.btnFinish.Text = "完成";
             this.btnFinish.UseVisualStyleBackColor = true;
-            // 
-            // clKey
-            // 
-            this.clKey.DataPropertyName = "Key";
-            this.clKey.HeaderText = "键";
-            this.clKey.Name = "clKey";
-            this.clKey.Width = 200;
-            // 
-            // clValue
-            // 
-            this.clValue.DataPropertyName = "Value";
-            this.clValue.HeaderText = "值";
-            this.clValue.Name = "clValue";
-            this.clValue.Width = 200;
+            this.btnFinish.Click += new System.EventHandler(this.btnFinish_Click);
             // 
             // AddHeader
             // 

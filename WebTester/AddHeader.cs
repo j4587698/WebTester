@@ -45,5 +45,18 @@ namespace WebTester
             headerSource.ResetBindings(false);
 
         }
+
+        private void btnDel_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in gvHeaders.SelectedRows)
+            {
+                gvHeaders.Rows.Remove(row);
+            }
+        }
+
+        private void btnFinish_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }
