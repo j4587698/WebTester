@@ -39,15 +39,18 @@
             this.txtPostData = new System.Windows.Forms.TextBox();
             this.txtHtml = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnGetHtml = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnAnalysis = new System.Windows.Forms.Button();
             this.txtResult = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.txtExpression = new System.Windows.Forms.TextBox();
             this.rbJsonPath = new System.Windows.Forms.RadioButton();
             this.rbXpath = new System.Windows.Forms.RadioButton();
             this.label5 = new System.Windows.Forms.Label();
-            this.btnGetHtml = new System.Windows.Forms.Button();
-            this.btnAnalysis = new System.Windows.Forms.Button();
+            this.cbRedirect = new System.Windows.Forms.CheckBox();
+            this.cbShowCount = new System.Windows.Forms.CheckBox();
+            this.cbShowPath = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -147,6 +150,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cbRedirect);
             this.groupBox1.Controls.Add(this.btnGetHtml);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.txtURL);
@@ -164,8 +168,20 @@
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
             // 
+            // btnGetHtml
+            // 
+            this.btnGetHtml.Location = new System.Drawing.Point(321, 174);
+            this.btnGetHtml.Name = "btnGetHtml";
+            this.btnGetHtml.Size = new System.Drawing.Size(103, 23);
+            this.btnGetHtml.TabIndex = 11;
+            this.btnGetHtml.Text = "获取";
+            this.btnGetHtml.UseVisualStyleBackColor = true;
+            this.btnGetHtml.Click += new System.EventHandler(this.btnGetHtml_Click);
+            // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.cbShowPath);
+            this.groupBox2.Controls.Add(this.cbShowCount);
             this.groupBox2.Controls.Add(this.btnAnalysis);
             this.groupBox2.Controls.Add(this.txtResult);
             this.groupBox2.Controls.Add(this.label6);
@@ -178,6 +194,16 @@
             this.groupBox2.Size = new System.Drawing.Size(570, 670);
             this.groupBox2.TabIndex = 12;
             this.groupBox2.TabStop = false;
+            // 
+            // btnAnalysis
+            // 
+            this.btnAnalysis.Location = new System.Drawing.Point(435, 46);
+            this.btnAnalysis.Name = "btnAnalysis";
+            this.btnAnalysis.Size = new System.Drawing.Size(103, 23);
+            this.btnAnalysis.TabIndex = 12;
+            this.btnAnalysis.Text = "解析";
+            this.btnAnalysis.UseVisualStyleBackColor = true;
+            this.btnAnalysis.Click += new System.EventHandler(this.btnAnalysis_Click);
             // 
             // txtResult
             // 
@@ -235,25 +261,35 @@
             this.label5.TabIndex = 0;
             this.label5.Text = "解析模式";
             // 
-            // btnGetHtml
+            // cbRedirect
             // 
-            this.btnGetHtml.Location = new System.Drawing.Point(185, 178);
-            this.btnGetHtml.Name = "btnGetHtml";
-            this.btnGetHtml.Size = new System.Drawing.Size(103, 23);
-            this.btnGetHtml.TabIndex = 11;
-            this.btnGetHtml.Text = "获取";
-            this.btnGetHtml.UseVisualStyleBackColor = true;
-            this.btnGetHtml.Click += new System.EventHandler(this.btnGetHtml_Click);
+            this.cbRedirect.AutoSize = true;
+            this.cbRedirect.Location = new System.Drawing.Point(40, 181);
+            this.cbRedirect.Name = "cbRedirect";
+            this.cbRedirect.Size = new System.Drawing.Size(89, 19);
+            this.cbRedirect.TabIndex = 12;
+            this.cbRedirect.Text = "自动跳转";
+            this.cbRedirect.UseVisualStyleBackColor = true;
             // 
-            // btnAnalysis
+            // cbShowCount
             // 
-            this.btnAnalysis.Location = new System.Drawing.Point(218, 44);
-            this.btnAnalysis.Name = "btnAnalysis";
-            this.btnAnalysis.Size = new System.Drawing.Size(103, 23);
-            this.btnAnalysis.TabIndex = 12;
-            this.btnAnalysis.Text = "解析";
-            this.btnAnalysis.UseVisualStyleBackColor = true;
-            this.btnAnalysis.Click += new System.EventHandler(this.btnAnalysis_Click);
+            this.cbShowCount.AutoSize = true;
+            this.cbShowCount.Location = new System.Drawing.Point(17, 50);
+            this.cbShowCount.Name = "cbShowCount";
+            this.cbShowCount.Size = new System.Drawing.Size(89, 19);
+            this.cbShowCount.TabIndex = 13;
+            this.cbShowCount.Text = "显示总数";
+            this.cbShowCount.UseVisualStyleBackColor = true;
+            // 
+            // cbShowPath
+            // 
+            this.cbShowPath.AutoSize = true;
+            this.cbShowPath.Location = new System.Drawing.Point(112, 50);
+            this.cbShowPath.Name = "cbShowPath";
+            this.cbShowPath.Size = new System.Drawing.Size(121, 19);
+            this.cbShowPath.TabIndex = 14;
+            this.cbShowPath.Text = "显示实际Path";
+            this.cbShowPath.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -297,6 +333,9 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnGetHtml;
         private System.Windows.Forms.Button btnAnalysis;
+        private System.Windows.Forms.CheckBox cbRedirect;
+        private System.Windows.Forms.CheckBox cbShowPath;
+        private System.Windows.Forms.CheckBox cbShowCount;
     }
 }
 

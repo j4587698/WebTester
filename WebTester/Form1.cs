@@ -38,6 +38,11 @@ namespace WebTester
                 ShowMessage("URL不能为空！");
                 return;
             }
+
+            if (!txtURL.Text.Trim().StartsWith("http"))
+            {
+                txtURL.Text = @"http://" + txtURL.Text.Trim();
+            }
             HttpItem hi = new HttpItem();
             hi.URL = txtURL.Text;
             Type hiType = hi.GetType();
@@ -63,8 +68,21 @@ namespace WebTester
                 hi.Postdata = txtPostData.Text;
                 hi.Method = "POST";
             }
+
+            if (cbRedirect.Checked)
+            {
+                hi.Allowautoredirect = true;
+            }
             HttpResult result = new HttpHelper().GetHtml(hi);
-            txtHtml.Text = result.StatusCode != HttpStatusCode.OK ? $"错误码：{result.StatusCode}，\r\n错误描述：{result.Html}" : result.Html;
+            if (result.StatusCode != HttpStatusCode.OK)
+            {
+                txtHtml.Text = $@"错误码：{(int) result.StatusCode} {result.StatusCode}\r\n错误描述：{result.Html}";
+            }
+            else
+            {
+                txtURL.Text = result.ResponseUri;
+                txtHtml.Text = result.Html;
+            }
         }
 
         private void ShowMessage(string msg)
@@ -81,22 +99,30 @@ namespace WebTester
             }
 
             txtResult.Text = "";
+            if (cbShowCount.Checked)
+            {
+                txtResult.Text = $@"";
+            }
             try
             {
-                if (rbXpath.Checked)
+                List<ResultEntity> list;
+                list = rbXpath.Checked ? GetNodeValue(txtHtml.Text, txtExpression.Text) : GetList(txtHtml.Text, txtExpression.Text);
+                StringBuilder sb = new StringBuilder();
+                if (cbShowCount.Checked)
                 {
-                    var list = GetNodeValue(txtHtml.Text, txtExpression.Text);
-                    list.ForEach(x => { txtResult.Text += $@"{x}
------------------------------------------------------------------
-"; });
+                    sb.AppendLine($@"共获取节点{list.Count}个");
+                    sb.AppendLine("-----------------------------------------------------------------");
                 }
-                else
+                list.ForEach(x =>
                 {
-                    var list = GetList(txtHtml.Text, txtExpression.Text);
-                    list.ForEach(x => { txtResult.Text += $@"{x}
------------------------------------------------------------------
-"; });
-                }
+                    sb.AppendLine(x.Value);
+                    if (cbShowPath.Checked)
+                    {
+                        sb.AppendLine(x.Path);
+                    }
+                    sb.AppendLine("-----------------------------------------------------------------");
+                });
+                txtResult.Text = sb.ToString();
             }
             catch (Exception exception)
             {
@@ -106,27 +132,27 @@ namespace WebTester
             
         }
 
-        private List<string> GetNodeValue(string html, string xpath)
+        private List<ResultEntity> GetNodeValue(string html, string xpath)
         {
-            var list = new List<string>();
+            var list = new List<ResultEntity>();
             var doc = new HtmlAgilityPack.HtmlDocument();
             doc.LoadHtml(html);
             var root = doc.DocumentNode;
             HtmlNodeNavigator navigator = (HtmlNodeNavigator)root.CreateNavigator();
             var nodes = navigator.Select(xpath);
-;           foreach (XPathNavigator node in nodes)
+;           foreach (HtmlNodeNavigator node in nodes)
             {
-                list.Add(node.Value);
+                list.Add(new ResultEntity(){Value = node.Value, Path = node.CurrentNode.XPath});
             }
 
             return list;
         }
 
-        public List<string> GetList(string json, string jpath)
+        private List<ResultEntity> GetList(string json, string jpath)
         {
             JObject o = JObject.Parse(json);
             var tokens = o.SelectTokens(jpath);
-            return tokens.Select(x => x.ToString()).ToList();
+            return tokens.Select(x => new ResultEntity(){Value = x.ToString(), Path = x.Path}).ToList();
         }
     }
 }
